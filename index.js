@@ -57,8 +57,9 @@
   }
 
   mova.addLanguages = function(newLanguages) {
-    for (var key in Object.keys(newLanguages)) {
-      languages[key] = newLanguages[key];
+    var keys = Object.keys(newLanguages);
+    for (var i in keys) {
+      languages[keys[i]] = newLanguages[keys[i]];
     }
 
     if (!language) {
@@ -73,7 +74,7 @@
   mova.nameSpace = function() {
     var outerArgs = argsToArray(arguments);
     return function() {
-      return mova(outerArgs, argsToArray(arguments));
+      return mova.apply(null, outerArgs.concat(argsToArray(arguments)));
     }
   };
 
