@@ -31,6 +31,7 @@ import mova from 'mova';
 // Add languages packs
 mova.addLanguages({ en });
 
+// Basic usage
 console.log(mova('common.login')); // -> 'Login'
 console.log(mova('pages.Registration')); // -> 'pages.Registration'
 
