@@ -1,0 +1,15 @@
+{
+  "name": "mova",
+  "version": "1.0.0",
+  "description": "Lightweight and simple i18n utility",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onatolich/mova.git"
+  },
+  "keywords": [
+    "mova"
+  ],
+  "author": "Onatolich",
+  "license": "MIT"
+}
