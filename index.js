@@ -16,6 +16,23 @@
     return Array.prototype.slice.call(args, 0);
   }
 
+  function assign(target, varArgs) {
+    var to = Object(target);
+
+    for (var index = 1; index < arguments.length; index++) {
+      var nextSource = arguments[index];
+
+      if (nextSource) {
+        for (var nextKey in nextSource) {
+          if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+            to[nextKey] = nextSource[nextKey];
+          }
+        }
+      }
+    }
+    return to;
+  }
+
   function preparePath(parts) {
     parts = parts || [];
     var path = [];
@@ -24,39 +41,61 @@
       path = path.concat(parts[i].split('.'));
     }
 
-    return path;
-  }
-
-  function pathToString(path) {
     return path.join('.');
   }
 
-  function resolvePath(tree, path, originalPath) {
-    originalPath = originalPath || path;
-    var node = tree[path[0]];
+  function getTranslate(dict, path) {
+    return dict[path] || path;
+  }
 
-    var nextPath = path.slice(1);
-    if (node && nextPath.length) {
-      return resolvePath(node, nextPath, originalPath);
+  function flatterDictionary(dict, path) {
+    path = path || '';
+    var node, nodePath;
+    var result = {};
+    var keys = Object.keys(dict);
+
+    for (var i in keys) {
+      node = dict[keys[i]];
+      nodePath = keys[i];
+      if (path) {
+        nodePath = [path, nodePath].join('.');
+      }
+
+      switch (typeof node) {
+        case 'string':
+          result[nodePath] = node;
+          break;
+        case 'object':
+          assign(result, flatterDictionary(node, nodePath));
+          break;
+      }
     }
 
-    switch (typeof node) {
-      case 'string':
-        return node;
+    return result;
+  }
 
-      default:
-        return pathToString(originalPath);
+  function languagePreprocessor(rawDict) {
+    var dict = flatterDictionary(rawDict);
+    var keys = Object.keys(dict);
+
+    for (var i in keys) {
+      dict[keys[i]] = dict[keys[i]]
+        .replace(/<([a-z0-9.]+)>/gi, function(_, match) {
+          return getTranslate(dict, match);
+        });
     }
+
+    return dict;
   }
 
   function mova() {
-    return resolvePath(language, preparePath(argsToArray(arguments)));
+    return getTranslate(language, preparePath(argsToArray(arguments)));
   }
 
   mova.addLanguages = function(newLanguages) {
     var keys = Object.keys(newLanguages);
     for (var i in keys) {
-      languages[keys[i]] = newLanguages[keys[i]];
+      languages[keys[i]] = languagePreprocessor(newLanguages[keys[i]]);
     }
 
     if (!language) {
