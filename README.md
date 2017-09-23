@@ -32,7 +32,7 @@ console.log(mova('fullName')); // -> 'Name and Surname'
 
 // Using namespaces
 const t = mova.nameSpace('common');
-console.log(t('surname')); // -> 'Email'
+console.log(t('surname')); // -> 'Surname'
 
 // Change language
 mova.setLanguage('ua');
