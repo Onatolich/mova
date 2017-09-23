@@ -1,25 +1,20 @@
 # mova
-Lightweight and simple internationalization (i18n) utility.
+Powerful and fast internationalization (i18n) utility.
 
 ## Installation
 ```sh
 $ npm install mova
 ```
 
-## Usage
+## Basic Usage
 _en.json_
 ```json
 {
   "common": {
-    "login": "Login",
-    "cancel": "Cancel"
+    "name": "Name",
+    "surname": "Surname"
   },
-  "pages": {
-    "Login": {
-      "email": "Email",
-      "password": "Password"
-    }
-  }
+  "fullName": "<common.name> and <common.surname>"
 }
 ```
 
@@ -32,15 +27,27 @@ import mova from 'mova';
 mova.addLanguages({ en });
 
 // Basic usage
-console.log(mova('common.login')); // -> 'Login'
-console.log(mova('pages.Registration')); // -> 'pages.Registration'
+console.log(mova('common.name')); // -> 'Name'
+console.log(mova('fullName')); // -> 'Name and Surname'
 
-// Create a namespace
-const t = mova.nameSpace('pages.Login');
-console.log(t('email')); // -> 'Email'
+// Using namespaces
+const t = mova.nameSpace('common');
+console.log(t('surname')); // -> 'Email'
 
 // Change language
 mova.setLanguage('ua');
+```
+
+## Cache and links
+When you're adding a language pack mova caches it and resolves all links for maximum performance in runtime.
+
+So, in fact, example language pack from above will be resolved to this:
+```json
+{
+  "common.name": "Name",
+  "common.surname": "Surname",
+  "fullName": "Name and Surname"
+}
 ```
 
 ## Paths
