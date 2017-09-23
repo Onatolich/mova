@@ -76,4 +76,6 @@
       return mova(outerArgs, argsToArray(arguments));
     }
   };
+
+  return mova;
 }));
