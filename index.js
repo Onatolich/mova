@@ -35,17 +35,14 @@
     originalPath = originalPath || path;
     var node = tree[path[0]];
 
+    var nextPath = path.slice(1);
+    if (node && nextPath.length) {
+      return resolvePath(node, nextPath, originalPath);
+    }
+
     switch (typeof node) {
       case 'string':
         return node;
-
-      case 'object':
-        var nextPath = path.slice(1);
-        if (!nextPath.length) {
-          return pathToString(originalPath);
-        }
-
-        return resolvePath(node, nextPath, originalPath);
 
       default:
         return pathToString(originalPath);
