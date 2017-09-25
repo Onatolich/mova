@@ -14,7 +14,8 @@ _en.json_
     "name": "Name",
     "surname": "Surname"
   },
-  "fullName": "<common.name> and <common.surname>"
+  "fullName": "<common.name> and <common.surname>",
+  "hello": "Hello, <=name>!"
 }
 ```
 
@@ -29,6 +30,7 @@ mova.addLanguages({ en });
 // Basic usage
 console.log(mova('common.name')); // -> 'Name'
 console.log(mova('fullName')); // -> 'Name and Surname'
+console.log(mova('hello', { name: 'World' })); // -> 'Hello, World!'
 
 // Using namespaces
 const t = mova.nameSpace('common');

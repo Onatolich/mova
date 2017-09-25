@@ -35,17 +35,34 @@
 
   function preparePath(parts) {
     parts = parts || [];
+    var part;
     var path = [];
+    var variables = {};
 
     for (var i = 0; i < parts.length; i++) {
-      path = path.concat(parts[i].split('.'));
+      part = parts[i]
+      if (typeof part === 'object') {
+        variables = part;
+        continue;
+      }
+      path = path.concat(part.split('.'));
     }
 
-    return path.join('.');
+    return {
+      variables: variables,
+      path: path.join('.')
+    };
   }
 
-  function getTranslate(dict, path) {
-    return dict[path] || path;
+  function getTranslate(dict, data) {
+    var result = dict[data.path];
+    if (result) {
+      return result.replace(/<=([a-z0-9]+)>/gi, function(_, match) {
+        return data.variables[match] || _;
+      });
+    }
+
+    return data.path;
   }
 
   function flatterDictionary(dict, path) {
@@ -81,7 +98,7 @@
     for (var i in keys) {
       dict[keys[i]] = dict[keys[i]]
         .replace(/<([a-z0-9.]+)>/gi, function(_, match) {
-          return getTranslate(dict, match);
+          return getTranslate(dict, { path: match });
         });
     }
 
