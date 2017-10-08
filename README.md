@@ -11,6 +11,7 @@ _en.json_
 ```json
 {
   "common": {
+    ".": "Common",
     "name": "Name",
     "surname": "Surname"
   },
@@ -31,6 +32,9 @@ mova.addLanguages({ en });
 console.log(mova('common.name')); // -> 'Name'
 console.log(mova('fullName')); // -> 'Name and Surname'
 console.log(mova('hello', { name: 'World' })); // -> 'Hello, World!'
+
+// Index translation
+console.log(mova('common')); // -> 'Common'
 
 // Using namespaces
 const t = mova.nameSpace('common');

@@ -74,7 +74,10 @@
     for (var i in keys) {
       node = dict[keys[i]];
       nodePath = keys[i];
-      if (path) {
+
+      if (nodePath === '.') {
+        nodePath = path;
+      } else if (path) {
         nodePath = [path, nodePath].join('.');
       }
 
