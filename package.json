@@ -1,8 +1,13 @@
 {
   "name": "mova",
   "version": "1.2.1",
-  "description": "Powerful and fast i18n utility",
-  "main": "index.js",
+  "description": "Powerful and fast runtime i18n utility without dependencies",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "mocha",
+    "build": "rm -rf ./dist && webpack --mode production",
+    "postversion": "git push && git push --tags"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/onatolich/mova.git"
@@ -14,8 +19,22 @@
     "i18n",
     "translate",
     "translation",
-    "dictionary"
+    "dictionary",
+    "runtime",
+    "fast"
   ],
-  "author": "Onatolich",
-  "license": "MIT"
+  "author": "Eugene Tsakh",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel": "^6.23.0",
+    "babel-loader": "^8.0.4",
+    "chai": "^4.1.2",
+    "clean-webpack-plugin": "^0.1.19",
+    "mocha": "^5.2.0",
+    "webpack": "^4.22.0",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {}
 }
