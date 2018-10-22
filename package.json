@@ -1,6 +1,6 @@
 {
   "name": "mova",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "Powerful and fast runtime i18n utility without dependencies",
   "main": "dist/index.js",
   "scripts": {
