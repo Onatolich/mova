@@ -131,17 +131,19 @@ function resolveInheritance(branch, language) {
     return resolveInheritance(branch, branch);
   }
 
-  const extendsPath = branch[constants.EXTENDS_KEY] || '';
-  let extendResult = {};
+  const extendsPaths = (branch[constants.EXTENDS_KEY] || '').split(',').map(v => v.trim()).filter(Boolean);
 
-  if (extendsPath.length) {
-    const inheritBranch = getByPath(language, extendsPath, false);
+  const extendResult = extendsPaths.reduce((result, path) => {
+    const inheritBranch = getByPath(language, path, false);
     if (!isObject(inheritBranch)) {
-      throw new Error(`Path ${extendsPath} can not be extended as its value is not an object!`);
+      throw new Error(`Path ${path} can not be extended as its value is not an object!`);
     }
 
-    extendResult = resolveInheritance(inheritBranch, language);
-  }
+    return {
+      ...result,
+      ...resolveInheritance(inheritBranch, language),
+    };
+  }, {});
 
   return Object.keys(branch).reduce((result, key) => {
     if (key === constants.EXTENDS_KEY) {

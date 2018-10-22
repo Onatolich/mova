@@ -184,6 +184,26 @@ mova('branch3.k1'); // -> 'branch 2, value 1'
 mova('branch3.k2'); // -> 'branch 1, value 2'
 ```
 
+You also can extend from several branches using `,` as paths separator in `@extends` directive:
+```json
+{
+  "branch1": {
+    "k1": "value 1"
+  },
+  "branch2": {
+    "k2": "value 2"
+  },
+  "branch3": {
+    "@extends": "branch1, branch2"
+  }
+}
+```
+
+```js
+mova('branch3.k1'); // -> 'value 1'
+mova('branch3.k2'); // -> 'value 2'
+```
+
 ###### NOTE
 `@extends` directive has some restrictions:
 1. You can not extend any of parent branches.

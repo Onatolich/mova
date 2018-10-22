@@ -71,6 +71,27 @@ describe('preCompile tests', () => {
         'b3.k1': 'v3',
       });
     });
+
+    it('should allow multiple inheritance', () => {
+      const result = preCompile({
+        b1: {
+          k1: 'v1',
+        },
+        b2: {
+          k2: 'v2',
+        },
+        b3: {
+          '@extends': 'b1, b2',
+        },
+      });
+
+      expect(result).to.deep.equal({
+        'b1.k1': 'v1',
+        'b2.k2': 'v2',
+        'b3.k1': 'v1',
+        'b3.k2': 'v2',
+      });
+    });
   });
 
   describe('In-value <[path]> directives', () => {
