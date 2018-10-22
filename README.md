@@ -30,7 +30,7 @@ mova('k1.k2.k3.k4.k5', { param: 'value' });
 mova('k1', 'k2', 'k3', 'k4', 'k5', { param: 'value' });
 mova('k1', 'k2', ['k3'], 'k4.k5', { param: 'value' });
 mova('k1', ['k2', ['k3', 'k4']], 'k5', { param: 'value' });
-mova('k1', ['k2', ['k3', 'k4']], 'k5', { param: 'value' });
+mova('k1', ['k2', ['k3.k4']], 'k5', { param: 'value' });
 mova('.', null, 'k1', NaN, ['k2', 'k3.k4'], {}, 'k5', 10, { param: 'value' });
 ```
 
